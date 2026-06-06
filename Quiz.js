@@ -151,11 +151,50 @@ var opt1=document.getElementById('opt1')
 var opt2=document.getElementById('opt2')
 var opt3=document.getElementById('opt3')
 var index=0
+var btn =document.getElementById('btn')
+var score=0
+var min=1
+var sec=59
+var timer =document.getElementById('timer')
+var interval=setInterval(function(){
+    timer.innerHTML=`${min}:${sec}`
+    sec--
+if(sec<0){
+    min--
+    sec=59
+    if(min<0){
+        min=1
+        sec=59
+        nextquestion()
+    }
+}
 
+
+
+},1000)
 
 function nextQuestion(){
+    var getOptions=document.getElementByName('options')
+    console.log(getOptions)
+    for(var i=0;i,getOptions.length;i++){
+if(getOptions[i].checked){
+    var selectedValue=getOptions[i].value
+     var selectedQues=questions[index-1]['question']
+     var selectedAnswer=questions[index-1][`option${selectedValue}`]
+     var correctOptions=questions[index-1]['correctOption']
+     if(selectedValue==correctOptions){
+        score++
+     }
+     console.log(selectedAnswer)
+}
+
+getOptions[i].checked=false
+    }
+btn.disabled=true
+
+
     if(index>questions.length-1){
-        document.write("questions complete")
+        document.write("your percentage is" + ((score/questions.length)*100).toFixed(2))
     }
     else{
 ques.innerTEXT = questions[index].question
@@ -171,7 +210,7 @@ nextQuestion()
 
 
 function clicked(){
-    var btn =document.getElementById('btn')
+    
     btn.disabled=false
 }
 
